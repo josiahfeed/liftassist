@@ -1,9 +1,10 @@
 import React from 'react';
 import { createSwitchNavigator, createStackNavigator, NavigationActions, createAppContainer } from 'react-navigation';
-//import Drawer from './Drawer'
+import Drawer from './Drawer'
 import Load from '../screens/Load';
 import Home from '../screens/Home';
-
+import Warmup from '../screens/Warmup';
+import DresserMenu from '../components/DresserMenu';
 
 const StackNavigatorConfig = {
     defaultNavigationOptions: ({navigation}) => ({
@@ -28,8 +29,8 @@ const AnimeStack = createStackNavigator({
     }
 });
 
-//const AppStack = createStackNavigator({ Drawer, AnimeStack },StackNavigatorConfig);
-const AppStack = createStackNavigator({ AnimeStack }, noHeaderConfig);
+const AppStack = createStackNavigator({ Drawer, AnimeStack },StackNavigatorConfig);
+//const AppStack = createStackNavigator({ Drawer, AnimeStack }, noHeaderConfig);
 
 const AppContainer = createSwitchNavigator(
     {
