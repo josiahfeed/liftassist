@@ -6,6 +6,7 @@ import { ImageBackground, Image } from 'react-native';
 import Home from '../screens/Home';
 import Home2 from '../screens/Home2';
 import Warmup from '../screens/Warmup';
+import Percentages from '../screens/Percentages';
 
 //import Settings from '../screens/Settings';
 //import Journey from '../screens/Journey';
@@ -52,7 +53,8 @@ const Drawer = createDrawerNavigator({
         }
     },
     Warmup,
-    Home2
+    Home2,
+    Percentages
 },{
     initialRouteName: 'Home',
     drawerPosition: 'right',

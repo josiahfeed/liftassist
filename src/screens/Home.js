@@ -47,6 +47,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            edit: true,
             frozen: false,
             input: this.props.input,
             gestureName: 'none',
@@ -75,19 +76,20 @@ class Home extends Component {
             circles: {
                 lg: {
                     size: 700,
-                    opacity: '0.10',
+                    opacity: 0.10,
                     top: 700/2,
                     left: 700/2,
                 },
                 sm: {
-                    size: 300,
-                    opacity: '0.20',
+                    size: new Animated.Value(3.5),
+                    opacity: 0.20,
                     top: 300/2,
                     left: 300/2,
                     anime: new Animated.Value(0),
                 }
             },
             anime: {
+                percent: new Animated.Value(0),
                 in: {
                     toValue: 1,
                     duration : 600,
@@ -127,6 +129,12 @@ class Home extends Component {
     }
     componentDidMount(){
         //this.startTimer();
+        let time = {
+            sec: 4,
+            min: 3
+        }
+        console.log("🚀 " + time)
+        //this.props.updateTime(time);
     }
     
 
@@ -165,6 +173,7 @@ class Home extends Component {
         if (min === 0 & sec === 0) {
             this.stopTimer(true);
         }
+        //this.props.updateTime(this.state.slider)
         console.log(min)
         this.setState({
             minutes: min,
@@ -184,15 +193,25 @@ class Home extends Component {
         console.log("You Swiped Up")
     }
 
+    calculatePlates = () => {
+        console.log("⛵️ "+this.props.input)
+    }
     onSwipeLeft(gestureState) {
         console.log("You Swiped Left")
         if(!this.state.frozen) {
-            this.setState({frozen: true});
+            this.setState({frozen: true, edit: false});
             if(this.state.page === 0) {
-                Animated.timing(this.state.clock.scale, this.state.anime.out).start(this.freezer(false));
+                this.calculatePlates();
+                //Animated.timing(this.state.clock.scale, this.state.anime.out).start(this.freezer(false));
                 Animated.timing(this.state.clock.box, {
                     toValue: 25,
                     duration : 500,
+                    delay: 0,
+                    useNativeDriver: true
+                }).start();
+                Animated.timing(this.state.anime.percent, {
+                    toValue: 1,
+                    duration : 800,
                     delay: 0,
                     useNativeDriver: true
                 }).start();
@@ -203,18 +222,35 @@ class Home extends Component {
                     delay: 300,
                     useNativeDriver: true
                 }).start();
-                Animated.timing(this.state.circles.sm.anime, {
-                    toValue: -50,
-                    duration : 300,
-                    delay: 300,
-                    useNativeDriver: true
-                }).start();
+                //Animated.timing(this.state.circles.sm.anime, {
+                //    toValue: -50,
+                //    duration : 300,
+                //    delay: 300,
+                //    useNativeDriver: true
+                //}).start();
                 Animated.timing(this.state.title.size, {
                     toValue: 0.75,
                     duration : 300,
                     delay: 300,
                     useNativeDriver: true
                 }).start();
+                Animated.spring(this.state.circles.sm.anime, {
+                    toValue: -80,
+                    friction: 6,
+                    useNativeDriver: true
+                }).start();
+                Animated.timing(this.state.circles.sm.size, {
+                    toValue: 1,
+                    duration : 500,
+                    delay: 0,
+                    useNativeDriver: true
+                }).start();
+                Animated.spring(this.state.clock.scale, {
+                    toValue: 0.5,
+                    duration : 600,
+                    friction: 6,
+                    useNativeDriver: true
+                }).start(this.freezer(false));
             }
         }
     }
@@ -222,18 +258,31 @@ class Home extends Component {
     onSwipeRight(gestureState) {
         console.log("You Swiped Right")
         if(!this.state.frozen) {
-            this.setState({frozen: true});
+            this.setState({frozen: true, edit: true});
             if(this.state.page === 0) {
-                Animated.timing(this.state.clock.scale, this.state.anime.in).start(this.freezer(false));
                 Animated.timing(this.state.clock.box, {
                     toValue: 75,
                     duration : 500,
                     delay: 0,
                     useNativeDriver: true
                 }).start();
+                Animated.timing(this.state.anime.percent, this.state.anime.outDelay).start();
                 Animated.timing(this.state.warmup, this.state.anime.inDelay).start();
                 Animated.timing(this.state.warmupBlock, this.state.anime.inDelay).start();
                 Animated.timing(this.state.circles.sm.anime, this.state.anime.inDelay).start();
+                Animated.timing(this.state.circles.sm.size, {
+                    toValue: 3.5,
+                    duration : 500,
+                    delay: 0,
+                    useNativeDriver: true
+                }).start();
+                Animated.timing(this.state.title.size, {
+                    toValue: 1,
+                    duration : 300,
+                    delay: 300,
+                    useNativeDriver: true
+                }).start();
+                Animated.timing(this.state.clock.scale, this.state.anime.in).start(this.freezer(false));
             }
         }
     }
@@ -313,13 +362,14 @@ class Home extends Component {
                             transform: [{ translateY: this.state.circles.sm.anime }]
                         }}
                     >
-                        <View 
+                        <Animated.View 
                             style={{
                                 backgroundColor: 'white',
                                 width: 300,//this.state.circles.sm.size,
                                 height: 300,//this.state.circles.sm.size,
                                 borderRadius: 150,//this.state.circles.sm.size/2,
-                                opacity: '0.20',//this.state.circles.sm.opacity,
+                                opacity: 0.20,//this.state.circles.sm.opacity,
+                                transform: [{ scaleX: this.state.circles.sm.size }, { scaleY: this.state.circles.sm.size }]
                             }}
                         />
                         <TextInput
@@ -332,7 +382,7 @@ class Home extends Component {
                                 fontFamily: "AvenirB",
                                 top: -215,
                             }}
-                            editable = {true}
+                            editable = {this.state.edit}
                             multiline = {false}
                             numberOfLines = {1}
                             keyboardtype = {false}
@@ -342,6 +392,7 @@ class Home extends Component {
                             value={this.props.input}
                         />
                     </Animated.View>
+                    <Text>{(this.props.input*0.65)}</Text>
                     {/*<View 
                         style={{
                             position: 'absolute',
@@ -355,7 +406,7 @@ class Home extends Component {
                         }}
                     />*/}
 
-                    <View style={{position: 'absolute', top: 50, }}>
+                    <View style={{position: 'absolute', top: 50, flex:1,justifyContent: 'center',alignItems: 'center'}}>
                         <Animated.Text 
                             style={{
                                 alignItems: 'center', 
@@ -376,6 +427,7 @@ class Home extends Component {
                             <View style={{width: 50,height: 50, borderRadius: 50/2,backgroundColor: 'white',marginLeft: 7}} />
                         </Animated.View>
                     </View>
+                    <Animated.Text style={{top: 170, left: (SCREEN_WIDTH/2)-30,position: 'absolute', alignItems: 'center', fontSize: 38, color: 'white', fontFamily: "AvenirB", opacity: this.state.anime.percent}}>65%</Animated.Text>
 
                     <Animated.View
                         style={{
@@ -384,7 +436,7 @@ class Home extends Component {
                             bottom: 0,
                             position: 'absolute',
                             backgroundColor: 'white',
-                            opacity: '0.10',
+                            opacity: 0.10,
                             transform: [{ translateY: this.state.clock.box }]
                         }}
                     />
@@ -404,7 +456,7 @@ class Home extends Component {
                             backgroundColor: 'white',
                             borderWidth: 5,
                             borderColor: this.state.clockColor,
-                            opacity: '1',
+                            opacity: 1,
                             }}>
                             
                             <Image 
@@ -434,8 +486,10 @@ function mapDispatchToProps(dispatch){
 	return{
         setLoad: (i) => dispatch({ type: 'LOAD', marbles: i }),
         updateInput: (i) => dispatch({ type: 'UPDATE', input: i }),
+        updateTime: (i) => dispatch({ type: 'TIME_ARRAY', time: i }),
 	}
 } 
+
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 
