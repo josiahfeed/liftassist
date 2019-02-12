@@ -4,6 +4,7 @@ import { Container, Header, Body, Content } from 'native-base';
 import { ImageBackground, Image } from 'react-native';
 
 import Home from '../screens/Home';
+import Home2 from '../screens/Home2';
 import Warmup from '../screens/Warmup';
 
 //import Settings from '../screens/Settings';
@@ -46,11 +47,12 @@ const Drawer = createDrawerNavigator({
     Home: {
         screen: Home,
         defaultNavigationOptions: {
-            //gesturesEnabled: false
-            //drawerLockMode: 'locked-closed'
+            //gesturesEnabled: false,
+            drawerLockMode: 'locked-close'
         }
     },
-    Warmup
+    Warmup,
+    Home2
 },{
     initialRouteName: 'Home',
     drawerPosition: 'right',
@@ -71,6 +73,7 @@ const Drawer = createDrawerNavigator({
     headerMode: 'none',
     defaultNavigationOptions: {
         headerVisible: false,
+        drawerLockMode: 'locked-closed'
     }
 });
 

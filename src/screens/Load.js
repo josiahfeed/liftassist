@@ -47,20 +47,12 @@ class Load extends Component {
         //        require('../assets/images/robot-prod.png'),
         //        require('../assets/images/bg/bb.jpg')
         //    ]),
-        //    Font.loadAsync({
-        //        //...Icon.Ionicons.font,
-        //        'justaword': require('../assets/fonts/Justaword.ttf'),
-        //        'chalker': require('../assets/fonts/Chalker.otf'),
-        //        'macbeth': require('../assets/fonts/Macbeth.otf'), // only black
-        //        'leafy': require('../assets/fonts/leafy.otf'),
-        //        'tenthousand': require('../assets/fonts/TenThousand.ttf'),
-        //        'apple': require('../assets/fonts/appleberry.ttf'),
-        //        'bebas': require('../assets/fonts/bebas/BebasNeue-Regular.otf'),
-        //        'bebasb': require('../assets/fonts/bebas/BebasNeue-Bold.otf'),
-        //        'bebasl': require('../assets/fonts/bebas/BebasNeue-Light.otf'),
-        //        'slowly': require('../assets/fonts/SlowlyTwo.ttf'),
-        //        'coco': require('../assets/fonts/cocogoose.ttf'),
-        //    }),
+            Font.loadAsync({
+                //...Icon.Ionicons.font,
+                'Avenir': require('../assets/fonts/AvenirNextLTPro-Bold.otf'),
+                'AvenirB': require('../assets/fonts/AvenirNextLTPro-HeavyCn.otf'),
+                'AvenirL': require('../assets/fonts/AvenirNextLTPro-UltLtCn.otf'),
+            }),
         //    /*JSON.loadAsync({
         //        'jjData': require('../content/journeyContent.json')
         //    }),*/

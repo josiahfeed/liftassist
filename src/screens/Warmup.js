@@ -12,6 +12,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
+
+
 //import Carousel, { Pagination } from 'react-native-snap-carousel';
 //import window from '../constants/Layout';
 //import { HomeParax } from './home/HomeParax'
@@ -93,6 +95,11 @@ class Warmup extends Component {
                     value={this.props.input}
                 />
                 {console.log(this.props.input)}
+                <TouchableOpacity 
+                        onPress={() => this.cleanData()}
+                    >
+                        <Text style={{color: 'white', fontSize: 18, textAlign: 'center', paddingTop: 50}}>Clear AsyncStorage {this.props.input}</Text>
+                    </TouchableOpacity>
             </View>
         );
     }

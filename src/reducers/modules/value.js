@@ -2,7 +2,7 @@ import { AsyncStorage} from 'react-native'
 import { TOTAL_UPDATE } from '../../types'
 
 const initialState = { 
-    input: '272'
+    input: '275'
 };
 
 const value = (state = initialState, action) => {
